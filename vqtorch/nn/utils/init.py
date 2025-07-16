@@ -1,5 +1,4 @@
 import torch
-# from stringcolor import cs
 import warnings
 import vqtorch
 
@@ -8,6 +7,7 @@ import vqtorch
 @torch.no_grad()
 def data_dependent_init_forward_hook(self, inputs, outputs, use_kmeans=True, verbose=False):
 	""" initializes codebook from data """
+	from stringcolor import cs
 
 	if (not self.training) or (self.data_initialized.item() == 1):
 		return
