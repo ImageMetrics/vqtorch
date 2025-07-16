@@ -7,12 +7,12 @@ import vqtorch
 @torch.no_grad()
 def data_dependent_init_forward_hook(self, inputs, outputs, use_kmeans=True, verbose=False):
 	""" initializes codebook from data """
-	from stringcolor import cs
 
 	if (not self.training) or (self.data_initialized.item() == 1):
 		return
 
 	if verbose:
+		from stringcolor import cs
 		print(cs('initializing codebook with k-means++', 'y'))
 
 	def sample_centroids(z_e, num_codes):
@@ -20,11 +20,11 @@ def data_dependent_init_forward_hook(self, inputs, outputs, use_kmeans=True, ver
 
 		z_e = z_e.reshape(-1, z_e.size(-1))
 
-		if num_codes >= z_e.size(0):
+		if num_codes > z_e.size(0):
 			e_msg = f'\ncodebook size > warmup samples: {num_codes} vs {z_e.size(0)}. ' + \
 					 'recommended to decrease the codebook size or increase batch size.'
 
-			warnings.warn(str(cs(e_msg, 'yellow')))
+			warnings.warn(e_msg)
 
 			# repeat until it fits and add noise
 			repeat = num_codes // z_e.shape[0]
