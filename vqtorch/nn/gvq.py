@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from stringcolor import cs
+# from stringcolor import cs
 from vqtorch.norms import with_codebook_normalization
 from .vq import VectorQuant
 

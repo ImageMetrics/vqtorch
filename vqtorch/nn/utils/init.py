@@ -1,5 +1,5 @@
 import torch
-from stringcolor import cs
+# from stringcolor import cs
 import warnings
 import vqtorch
 
