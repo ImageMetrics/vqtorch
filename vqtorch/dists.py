@@ -114,14 +114,14 @@ def euclidean_cdist_topk(tensor, codebook, compute_chunk_size=1024, topk=1,
 	return return_dict
 
 
-def cosine_cdist_topk(tensor, codebook, chunks=4, topk=1, half_precision=False):
+def cosine_cdist_topk(tensor, codebook, compute_chunk_size=1024, topk=1, half_precision=False):
 	""" Computes cosine distance instead. see `euclidean_cdist_topk` """
-	check_shape(tensor, codebook, mask)
+	# check_shape(tensor, codebook, mask)
 
 	tensor   = F.normalize(tensor,   p=2, dim=-1)
 	codebook = F.normalize(codebook, p=2, dim=-1)
 
-	d, q = euclidean_cdist_topk(tensor, codebook, chunks, topk, half_precision)
+	return_dict = euclidean_cdist_topk(tensor, codebook, compute_chunk_size, topk, half_precision)
+	return_dict['d'] = 0.5 * (return_dict['d'] ** 2)
 
-	d = 0.5 * (d ** 2)
-	return d, q.long()
+	return return_dict
