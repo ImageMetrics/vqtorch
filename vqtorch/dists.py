@@ -104,7 +104,7 @@ def euclidean_cdist_topk(tensor, codebook, compute_chunk_size=1024, topk=1,
 			tc = tc.half()
 			cb = cb.half()
 
-		d = torch.cdist(tc, cb)
+		d = torch.cdist(tc, cb, compute_mode='use_mm_for_euclid_dist')
 		dq.append(torch.topk(d, k=topk, largest=False, dim=-1))
 
 	d, q = torch.cat([_dq[0] for _dq in dq]), torch.cat([_dq[1] for _dq in dq])
